@@ -7,7 +7,7 @@ import { shallow } from 'enzyme';
 
 import React from 'react';
 
-describe('<%= indexRouteName %>', () => {
+describe('<%= indexContainerName %>', () => {
   beforeEach(() => {
     mockery.enable({
       warnOnReplace: false,
@@ -20,32 +20,46 @@ describe('<%= indexRouteName %>', () => {
       require('helpers/test/decoratorsMock')
     );
 <% } -%>
+    mockery.registerMock(
+      'components/<%= indexComponentName %> ',
+      require('helpers/test/componentsMock').<%= indexComponentName %>
+    );
+<% if (redux) { -%>
+    mockery.registerMock(
+      'react-redux',
+      require('helpers/test/reactReduxMock')
+    );
+<% } -%>
   });
 
   afterEach(() => {
 <% if (pureRender) { -%>
     mockery.deregisterMock('decorators');
 <% } -%>
+    mockery.deregisterMock('components/<%= indexComponentName %>');
+<% if (redux) { -%>
+    mockery.deregisterMock('react-redux');
+<% } -%>
     mockery.disable();
   });
 
   it('should exists', () => {
-    const <%= indexRouteName %> = require('../<%= indexRouteName %>');
+    const <%= indexContainerName %> = require('../<%= indexContainerName %>');
 
     const wrapper = shallow((
-      <<%= indexRouteName %> />
+      <<%= indexContainerName %> />
     ));
 
     expect(wrapper).to.have.length(1);
   });
 
   it('should render inner components', () => {
-    const <%= indexRouteName %> = require('../<%= indexRouteName %>');
+    const <%= indexContainerName %> = require('../<%= indexContainerName %>');
 
     const wrapper = shallow((
-      <<%= indexRouteName %> />
+      <<%= indexContainerName %> />
     ));
 
-    expect(wrapper.find('div')).to.have.length(1);
+    expect(wrapper.find('<%= indexComponentName %>')).to.have.length(1);
   });
 });

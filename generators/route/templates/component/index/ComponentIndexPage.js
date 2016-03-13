@@ -6,7 +6,7 @@ import { pureRender } from 'decorators';
 <% if (pureRender) { -%>
 @pureRender
 <% } -%>
-export default class <%= indexRouteName %> extends Component {
+export default class <%= indexComponentName %> extends Component {
   static propTypes = {
 
   };

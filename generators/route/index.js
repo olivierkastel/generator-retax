@@ -10,9 +10,14 @@ module.exports = yeoman.Base.extend({
 
     this.argument('routeName', {desc: 'The route name (eg. user)', type: String, required: true});
     this.containerName = `${_.capitalize(this.routeName)}Page`;
+    this.indexContainerName = `${_.capitalize(this.routeName)}IndexPage`;
+
     this.selectorName = `${_.capitalize(this.routeName)}PageSelector`;
+    this.indexSelectorName = `${_.capitalize(this.routeName)}IndexPageSelector`;
+
     this.componentName = `Wrapper${_.capitalize(this.routeName)}Page`;
-    this.indexRouteName = `${_.capitalize(this.routeName)}PageIndex`;
+    this.indexComponentName = `Wrapper${_.capitalize(this.routeName)}IndexPage`;
+
     this.routeNameConstant = _.upperCase(this.routeName);
   },
 
@@ -77,16 +82,18 @@ module.exports = yeoman.Base.extend({
     }.bind(this));
   },
 
-  _copyRoute() {
+  _copyRouteConstant() {
     this.fs.copyTpl(
-      this.templatePath('routeConstant.jss'),
+      this.templatePath('routeConstant.js'),
       this.destinationPath(`src/constants/routes/${this.routeName}.js`),
       {
         routeNameConstant: this.routeNameConstant,
         routeValue: this.answers.routeValue
       }
     );
+  },
 
+  _updateOrCopyRouteConstantIndex() {
     try {
       var file = htmlWiring.readFileAsString('src/constants/routes/index.js');
 
@@ -98,150 +105,279 @@ module.exports = yeoman.Base.extend({
       this.write('src/constants/routes/index.js', file);
     } catch (e) {
       this.fs.copyTpl(
-        this.templatePath('indexRouteConstant.jss'),
+        this.templatePath('indexRouteConstant.js'),
         this.destinationPath('src/constants/routes/index.js'),
         {
           routeName: this.routeName
         }
       );
     }
+  },
 
+  _copyRouteIndex() {
     this.fs.copyTpl(
-      this.templatePath('index.jss'),
+      this.templatePath('index.js'),
       this.destinationPath(`src/routes/${this.routeName}/index.js`),
       {
-        asyncRoute: this.answers.asyncRoute,
         scaffoldChildRoutes: this.answers.scaffoldChildRoutes,
         scaffoldIndexRoute: this.answers.scaffoldIndexRoute,
-        routeNameConstant: this.routeNameConstant,
-        containerName: this.containerName,
-        routeName: this.routeName,
+
+        asyncRoute: this.answers.asyncRoute,
+
         routeAccessLevel: this.answers.routeAccessLevel,
-        indexRouteName: this.indexRouteName
+
+        routeName: this.routeName,
+        routeNameConstant: this.routeNameConstant,
+
+        containerName: this.containerName,
+        indexContainerName: this.indexContainerName
+      }
+    );
+  },
+
+  _copyRoute() {
+    this._copyRouteConstant();
+    this._updateOrCopyRouteConstantIndex();
+    this._copyRouteIndex();
+  },
+
+  _copyContainerPage() {
+    this.fs.copyTpl(
+      this.templatePath(`container/page/ContainerPage.js`),
+      this.destinationPath(`src/routes/${this.routeName}/container/page/${this.containerName}.js`),
+      {
+        routeName: this.routeName,
+
+        redux: this.answers.redux,
+        pureRender: this.answers.pureRender,
+        selector: this.answers.selector,
+
+        containerName: this.containerName,
+        componentName: this.componentName,
+        selectorName: this.selectorName
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath(`container/page/__tests__/ContainerPage-test.js`),
+      this.destinationPath(`src/routes/${this.routeName}/container/page/__tests__/${this.containerName}-test.js`),
+      {
+        redux: this.answers.redux,
+        pureRender: this.answers.pureRender,
+
+        componentName: this.componentName,
+        containerName: this.containerName
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('container/page/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/container/page/index.js`),
+      {
+        containerName: this.containerName
+      }
+    );
+  },
+
+  _copyContainerIndexPage() {
+    this.fs.copyTpl(
+      this.templatePath(`container/index/ContainerIndexPage.js`),
+      this.destinationPath(`src/routes/${this.routeName}/container/index/${this.indexContainerName}.js`),
+      {
+        routeName: this.routeName,
+
+        redux: this.answers.redux,
+        pureRender: this.answers.pureRender,
+        selector: this.answers.selector,
+
+        indexContainerName: this.indexContainerName,
+        indexComponentName: this.indexComponentName,
+        indexSelectorName: this.indexSelectorName
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath(`container/index/__tests__/ContainerIndexPage-test.js`),
+      this.destinationPath(`src/routes/${this.routeName}/container/index/__tests__/${this.indexContainerName}-test.js`),
+      {
+        redux: this.answers.redux,
+        pureRender: this.answers.pureRender,
+
+        indexContainerName: this.indexContainerName,
+        indexComponentName: this.indexComponentName
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('container/index/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/container/index/index.js`),
+      {
+        indexContainerName: this.indexContainerName
+      }
+    );
+  },
+
+  _copyContainerIndex() {
+    this.fs.copyTpl(
+      this.templatePath('container/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/container/index.js`),
+      {
+        scaffoldIndexRoute: this.answers.scaffoldIndexRoute,
+
+        containerName: this.containerName,
+        indexContainerName: this.indexContainerName
       }
     );
   },
 
   _copyContainer() {
+    this._copyContainerPage();
+
+    if (this.answers.scaffoldIndexRoute) {
+      this._copyContainerIndexPage();
+    }
+
+    this._copyContainerIndex();
+  },
+
+  _copyComponentPage() {
     this.fs.copyTpl(
-      this.templatePath(`container/ContainerPage.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/container/${this.containerName}.js`),
+      this.templatePath(`component/page/WrapperPage.js`),
+      this.destinationPath(`src/routes/${this.routeName}/component/page/${this.componentName}.js`),
       {
-        redux: this.answers.redux,
         pureRender: this.answers.pureRender,
-        componentName: this.componentName,
-        containerName: this.containerName,
-        routeName: this.routeName,
-        selector: this.answers.selector,
-        selectorName: this.selectorName
+
+        componentName: this.componentName
       }
     );
     this.fs.copyTpl(
-      this.templatePath(`container/__tests__/ContainerPage-test.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/container/__tests__/${this.containerName}-test.js`),
+      this.templatePath(`component/page/__tests__/WrapperPage-test.js`),
+      this.destinationPath(`src/routes/${this.routeName}/component/page/__tests__/${this.componentName}-test.js`),
       {
-        redux: this.answers.redux,
         pureRender: this.answers.pureRender,
-        componentName: this.componentName,
-        containerName: this.containerName
+
+        componentName: this.componentName
       }
     );
     this.fs.copyTpl(
-      this.templatePath('container/index.jss'),
-      this.destinationPath(`src/routes/${this.routeName}/container/index.js`),
+      this.templatePath('component/page/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/component/page/index.js`),
       {
-        containerName: this.containerName
+        componentName: this.componentName
+      }
+    );
+  },
+
+  _copyComponentIndexPage() {
+    this.fs.copyTpl(
+      this.templatePath(`component/index/ComponentIndexPage.js`),
+      this.destinationPath(`src/routes/${this.routeName}/component/index/${this.indexComponentName}.js`),
+      {
+        pureRender: this.answers.pureRender,
+
+        indexComponentName: this.indexComponentName
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath(`component/index/__tests__/ComponentIndexPage-test.js`),
+      this.destinationPath(`src/routes/${this.routeName}/component/index/__tests__/${this.indexComponentName}-test.js`),
+      {
+        pureRender: this.answers.pureRender,
+
+        indexComponentName: this.indexComponentName
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('component/index/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/component/index/index.js`),
+      {
+        indexComponentName: this.indexComponentName
+      }
+    );
+  },
+
+  _copyComponentIndex() {
+    this.fs.copyTpl(
+      this.templatePath('component/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/component/index.js`),
+      {
+        scaffoldIndexRoute: this.answers.scaffoldIndexRoute,
+
+        componentName: this.componentName,
+        indexComponentName: this.indexComponentName
       }
     );
   },
 
   _copyComponents() {
-    this.fs.copyTpl(
-      this.templatePath(`component/wrapper/WrapperContainerPage.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/component/wrapper/${this.componentName}.js`),
-      {
-        pureRender: this.answers.pureRender,
-        componentName: this.componentName
-      }
-    );
-    this.fs.copyTpl(
-      this.templatePath(`component/wrapper/__tests__/WrapperContainerPage-test.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/component/wrapper/__tests__/${this.componentName}-test.js`),
-      {
-        pureRender: this.answers.pureRender,
-        componentName: this.componentName
-      }
-    );
-    this.fs.copyTpl(
-      this.templatePath('component/wrapper/index.jss'),
-      this.destinationPath(`src/routes/${this.routeName}/component/wrapper/index.js`),
-      {
-        componentName: this.componentName
-      }
-    );
-    this.fs.copyTpl(
-      this.templatePath('component/index.jss'),
-      this.destinationPath(`src/routes/${this.routeName}/component/index.js`),
-      {
-        componentName: this.componentName,
-        scaffoldIndexRoute: this.answers.scaffoldIndexRoute,
-        indexRouteName: this.indexRouteName
-      }
-    );
+    this._copyComponentPage();
+
+    if (this.answers.scaffoldIndexRoute) {
+      this._copyComponentIndexPage();
+    }
+
+    this._copyComponentIndex();
   },
 
-  _copyIndexRoute() {
+  _copyContainerSelector() {
     this.fs.copyTpl(
-      this.templatePath(`component/index/IndexRoute.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/component/index/${this.indexRouteName}.js`),
-      {
-        pureRender: this.answers.pureRender,
-        indexRouteName: this.indexRouteName
-      }
-    );
-    this.fs.copyTpl(
-      this.templatePath(`component/index/__tests__/IndexRoute-test.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/component/index/__tests__/${this.indexRouteName}-test.js`),
-      {
-        pureRender: this.answers.pureRender,
-        indexRouteName: this.indexRouteName
-      }
-    );
-    this.fs.copyTpl(
-      this.templatePath('component/index/index.jss'),
-      this.destinationPath(`src/routes/${this.routeName}/component/index/index.js`),
-      {
-        indexRouteName: this.indexRouteName
-      }
-    );
-  },
-
-  _copySelector() {
-    this.fs.copyTpl(
-      this.templatePath(`selector/ContainerSelector.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/selector/${this.selectorName}.js`),
+      this.templatePath(`selector/page/ContainerSelector.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/page/${this.selectorName}.js`),
       {}
     );
     this.fs.copyTpl(
-      this.templatePath(`selector/index.jss`),
-      this.destinationPath(`src/routes/${this.routeName}/selector/index.js`),
+      this.templatePath(`selector/page/index.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/page/index.js`),
       {
         selectorName: this.selectorName
       }
     );
   },
 
+  _copyContainerIndexSelector() {
+    this.fs.copyTpl(
+      this.templatePath(`selector/index/IndexPageSelector.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/index/${this.indexSelectorName}.js`),
+      {}
+    );
+
+    this.fs.copyTpl(
+      this.templatePath(`selector/index/index.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/index/index.js`),
+      {
+        indexSelectorName: this.indexSelectorName
+      }
+    );
+  },
+
+  _copySelectorIndex() {
+    this.fs.copyTpl(
+      this.templatePath(`selector/index.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/index.js`),
+      {
+        scaffoldIndexRoute: this.answers.scaffoldIndexRoute,
+
+        selectorName: this.selectorName,
+        indexSelectorName: this.indexSelectorName
+      }
+    );
+  },
+
+  _copySelector() {
+    this._copyContainerSelector();
+
+    if (this.answers.scaffoldIndexRoute) {
+      this._copyContainerIndexSelector();
+    }
+
+    this._copySelectorIndex();
+  },
+
   writing: function () {
     this._copyRoute();
+
     this._copyContainer();
+
     this._copyComponents();
 
     if (this.answers.selector) {
       this._copySelector();
-    }
-
-    if (this.answers.scaffoldIndexRoute) {
-      this._copyIndexRoute();
     }
   },
 

@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 <% if (pureRender) { -%>
 import { pureRender } from 'decorators';
 <% } -%>
-import <%= componentName %> from 'routes/<%= routeName %>/component/wrapper';
+import <%= indexComponentName %> from 'routes/<%= routeName %>/component/index';
 <% if (redux && selector) { -%>
-import <%= selectorName %> from 'routes/<%= routeName %>/selector';
+import <%= indexSelectorName %> from 'routes/<%= routeName %>/selector/index';
 <% } -%>
 
 <% if (redux && !selector) { -%>
@@ -32,16 +32,16 @@ function mapDispatchToProps(dispatch) {
 <% if (redux && !selector) { -%>
 @connect(mapStateToProps, mapDispatchToProps)
 <% } else if (redux && selector) { -%>
-@connect(<%= selectorName %>, mapDispatchToProps)
+@connect(<%= indexSelectorName %>, mapDispatchToProps)
 <% } -%>
-export default class <%= containerName %> extends Component {
+export default class <%= indexContainerName %> extends Component {
   static propTypes = {
 
   };
 
   render() {
     return (
-      <<%= componentName %>
+      <<%= indexComponentName %>
 
       />
     );

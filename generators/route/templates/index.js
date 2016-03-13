@@ -2,9 +2,9 @@
 import warning from 'warning';
 <% } -%>
 import { <%= routeNameConstant %> } from 'constants/routes';
-import <%= containerName %> from 'routes/<%= routeName %>/container';
+import <%= containerName %> from 'routes/<%= routeName %>/container/page';
 <% if (scaffoldIndexRoute) { -%>
-import <%= indexRouteName %> from 'routes/<%= routeName %>/component/index';
+import <%= indexContainerName %> from 'routes/<%= routeName %>/container/index';
 <% } -%>
 
 <% if (asyncRoute) { -%>
@@ -14,7 +14,7 @@ export default function getRoute(requireAuthFunctions) {
     onEnter: requireAuthFunctions.<%= routeAccessLevel %>,
     component: UserPage,
 <% if (scaffoldIndexRoute) { -%>
-    indexRoute: <%= indexRouteName %>,
+    indexRoute: <%= indexContainerName %>,
 <% } -%>
 <% if (scaffoldChildRoutes) { -%>
     getChildRoutes(location, callback) {
@@ -37,7 +37,7 @@ export default {
   path: <%= routeNameConstant %>,
   component: UserPage,
 <% if (scaffoldIndexRoute) { -%>
-  indexRoute: <%= indexRouteName %>,
+  indexRoute: <%= indexContainerName %>,
 <% } -%>
 <% if (scaffoldChildRoutes) { -%>
   getChildRoutes(location, callback) {
