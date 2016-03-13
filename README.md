@@ -27,9 +27,9 @@ MIT © [Thomas Hourlier](https://github.com/hourliert)
 
 [npm-image]: https://badge.fury.io/js/generator-fullstack-react.svg
 [npm-url]: https://npmjs.org/package/generator-fullstack-react
-[travis-image]: https://travis-ci.org/hourliert/generator-fullstack-react.svg?branch=master
+[travis-image]: https://travis-ci.org/hourliert/generator-fullstack-react.svg?branch=develop
 [travis-url]: https://travis-ci.org/hourliert/generator-fullstack-react
 [daviddm-image]: https://david-dm.org/hourliert/generator-fullstack-react.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/hourliert/generator-fullstack-react
-[coveralls-image]: https://coveralls.io/repos/hourliert/generator-fullstack-react/badge.svg
-[coveralls-url]: https://coveralls.io/r/hourliert/generator-fullstack-react
+[coveralls-image]: https://coveralls.io/repos/github/hourliert/generator-fullstack-react/badge.svg?branch=develop
+[coveralls-url]: https://coveralls.io/github/hourliert/generator-fullstack-react?branch=develop

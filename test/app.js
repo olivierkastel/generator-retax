@@ -1,19 +1,21 @@
 'use strict';
 var path = require('path');
 var assert = require('yeoman-assert');
-var helpers = require('yeoman-generator').test;
+var helpers = require('yeoman-test');
 
 describe('generator-fullstack-react:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+      .withOptions({'skip-install': true, 'skip-install-message': true})
+      .withArguments(['myProject'])
+      .withPrompts({repourl: 'https://github.com/user/myProject'})
       .on('end', done);
   });
 
   it('creates files', function () {
     assert.file([
-      'dummyfile.txt'
+      'package.json',
+      '.babelrc'
     ]);
   });
 });

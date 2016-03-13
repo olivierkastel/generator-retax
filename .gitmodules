@@ -1,0 +1,4 @@
+[submodule "generators/app/templates/react-seed"]
+	path = generators/app/templates/react-seed
+	url = https://github.com/hourliert/react-seed.git
+	branch = master
