@@ -9,7 +9,7 @@
     "url": "https://github.com/hourliert"
   },
   "engines": {
-    "node": ">=4",
+    "node": ">=5",
     "npm": ">=3.3 <4"
   },
   "files": [
