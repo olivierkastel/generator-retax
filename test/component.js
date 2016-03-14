@@ -6,14 +6,16 @@ var helpers = require('yeoman-test');
 describe('generator-fullstack-react:component', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/component'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+    .withArguments(['MyComponent'])
       .on('end', done);
   });
 
   it('creates files', function () {
     assert.file([
-      'dummyfile.txt'
+      'src/components/MyComponent/MyComponent.js',
+      'src/components/MyComponent/__tests__/MyComponent-test.js',
+      'src/components/MyComponent/index.js',
+      'src/components/index.js'
     ]);
   });
 });

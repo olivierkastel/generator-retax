@@ -9,6 +9,8 @@ module.exports = yeoman.Base.extend({
     yeoman.Base.apply(this, arguments);
 
     this.argument('routeName', {desc: 'The route name (eg. user)', type: String, required: true});
+    this.capitalizedRouteName = _.capitalize(this.routeName);
+
     this.containerName = `${_.capitalize(this.routeName)}Page`;
     this.indexContainerName = `${_.capitalize(this.routeName)}IndexPage`;
 
@@ -80,6 +82,28 @@ module.exports = yeoman.Base.extend({
       this.answers = answers;
       done();
     }.bind(this));
+  },
+
+  _updateOrCopyRouteIndex() {
+    try {
+      var file = htmlWiring.readFileAsString('src/routes/routes.js');
+
+      if (!new RegExp(`export { default as gen${this.capitalizedRouteName}Route } from '\\.\\/${this.routeName}';`, 'g').test(file)) {
+        file = file.replace(/^\s*\n/gm, '');
+        file = file.concat(`export { default as gen${this.capitalizedRouteName}Route } from './${this.routeName}';`);
+      }
+
+      this.write('src/constants/routes/routes.js', file);
+    } catch (e) {
+      this.fs.copyTpl(
+        this.templatePath('routeIndex.js'),
+        this.destinationPath('src/routes/routes.js'),
+        {
+          routeName: this.routeName,
+          capitalizedRouteName: this.capitalizedRouteName
+        }
+      );
+    }
   },
 
   _copyRouteConstant() {
@@ -379,6 +403,8 @@ module.exports = yeoman.Base.extend({
     if (this.answers.selector) {
       this._copySelector();
     }
+
+    this._updateOrCopyRouteIndex();
   },
 
   end: function () {

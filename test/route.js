@@ -34,7 +34,8 @@ describe('generator-fullstack-react:route', function () {
       'src/routes/user/selector/page/index.js',
       'src/routes/user/selector/index/UserIndexPageSelector.js',
       'src/routes/user/selector/index/index.js',
-      'src/routes/user/selector/index.js'
+      'src/routes/user/selector/index.js',
+      'src/routes/routes.js'
     ]);
   });
 });
