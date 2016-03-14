@@ -6,14 +6,14 @@ var helpers = require('yeoman-test');
 describe('generator-fullstack-react:selector', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/selector'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+      .withArguments(['errors'])
       .on('end', done);
   });
 
   it('creates files', function () {
     assert.file([
-      'dummyfile.txt'
+      'src/selectors/errors.js',
+      'src/selectors/index.js'
     ]);
   });
 });

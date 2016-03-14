@@ -6,7 +6,7 @@ var helpers = require('yeoman-test');
 describe('generator-fullstack-react:component', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/component'))
-    .withArguments(['MyComponent'])
+      .withArguments(['MyComponent'])
       .on('end', done);
   });
 
