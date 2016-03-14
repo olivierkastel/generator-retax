@@ -96,25 +96,15 @@ module.exports = yeoman.Base.extend({
     });
   },
 
-  _copyRouteConstant() {
-    this.fs.copyTpl(
-      this.templatePath('routeConstant.js'),
-      this.destinationPath(`src/constants/routes/${this.routeName}.js`),
-      {
-        routeNameConstant: this.routeNameConstant,
-        routeValue: this.answers.routeValue
-      }
-    );
-  },
-
   _updateOrCopyRouteConstantIndex() {
-    updateExport.bind(this)('src/constants/routes/index.js', {
+    updateExport.bind(this)('src/constants/routes.js', {
       templateFile: 'indexRouteConstant.js',
       templateOptions: {
-        routeName: this.routeName
+        routeNameConstant: this.routeNameConstant,
+        routeValue: this.answers.routeValue
       },
-      exportRegex: new RegExp(`export \\* from '\\.\\/${this.routeName}';`, 'g'),
-      exportString: `export * from './${this.routeName}';`
+      exportRegex: new RegExp(`export const ${this.routeNameConstant} = '${this.answers.routeValue}';`, 'g'),
+      exportString: `export const ${this.routeNameConstant} = '${this.answers.routeValue}';`
     });
   },
 
@@ -140,7 +130,6 @@ module.exports = yeoman.Base.extend({
   },
 
   _copyRoute() {
-    this._copyRouteConstant();
     this._updateOrCopyRouteConstantIndex();
     this._copyRouteIndex();
   },

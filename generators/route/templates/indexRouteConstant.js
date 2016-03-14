@@ -1,1 +1,1 @@
-export * from './<%= routeName %>';
+export const <%= routeNameConstant %> = '<%= routeValue %>';

@@ -2,7 +2,7 @@ import { handleActions } from 'redux-actions';
 import { fromJS } from 'immutable';
 
 import {
-  DEFAULT_ACTION,
+  <%= firstActionConstant %>,
 } from 'constants/actions/<%= reducerName %>';
 
 function getInitialState() {
@@ -12,7 +12,7 @@ function getInitialState() {
 }
 
 export default handleActions({
-  [DEFAULT_ACTION](state, action) {
+  [<%= firstActionConstant %>](state, action) {
     return state.setIn(['value'], action.payload);
   },
 }, getInitialState());

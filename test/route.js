@@ -13,8 +13,7 @@ describe('generator-fullstack-react:route', function () {
 
   it('creates files', function () {
     assert.file([
-      'src/constants/routes/user.js',
-      'src/constants/routes/index.js',
+      'src/constants/routes.js',
       'src/routes/user/index.js',
       'src/routes/user/container/page/UserPage.js',
       'src/routes/user/container/page/__tests__/UserPage-test.js',
