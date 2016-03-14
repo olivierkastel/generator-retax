@@ -5,7 +5,7 @@ chai.use(dirtyChai);
 import { fromJS } from 'immutable';
 
 import {
-  DEFAULT_ACTION,
+  <%= firstActionConstant %>,
 } from 'constants/actions/<%= reducerName %>';
 
 import <%= reducerName %> from '../<%= reducerName %>';
@@ -15,10 +15,10 @@ describe('<%= capitalizedReducerName %> Reducer', () => {
     expect(<%= reducerName %>).to.be.ok();
   });
 
-  it('should handle the DEFAULT_ACTION', () => {
+  it('should handle the <%= firstActionConstant %>', () => {
     let state = fromJS({ value: 0 });
     const action = {
-      type: DEFAULT_ACTION,
+      type: <%= firstActionConstant %>,
       payload: 1,
     };
 

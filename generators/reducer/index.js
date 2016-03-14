@@ -15,7 +15,21 @@ module.exports = yeoman.Base.extend({
   },
 
   prompting: function () {
-    this.log(yosay('I will scaffold a reducer'));
+    var done = this.async();
+
+    this.log(yosay('I will scaffold a action reducer'));
+
+    this.prompt([
+      {
+        type: 'input',
+        name: 'firstActionConstant',
+        message: 'What is the name of the first action of this reducer?',
+        default: 'DEFAULT_ACTION'
+      }
+    ], function (answers) {
+      this.answers = answers;
+      done();
+    }.bind(this));
   },
 
   _copyReducer() {
@@ -23,7 +37,8 @@ module.exports = yeoman.Base.extend({
       this.templatePath(`reducer.js`),
       this.destinationPath(`src/reducers/${this.reducerName}.js`),
       {
-        reducerName: this.reducerName
+        reducerName: this.reducerName,
+        firstActionConstant: this.answers.firstActionConstant
       }
     );
 
@@ -32,7 +47,8 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(`src/reducers/__tests__/${this.reducerName}-test.js`),
       {
         reducerName: this.reducerName,
-        capitalizedReducerName: this.capitalizedReducerName
+        capitalizedReducerName: this.capitalizedReducerName,
+        firstActionConstant: this.answers.firstActionConstant
       }
     );
   },

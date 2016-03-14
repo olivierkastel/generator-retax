@@ -1,1 +1,1 @@
-export default form './<%= componentName %>';
+export default from './<%= componentName %>';
