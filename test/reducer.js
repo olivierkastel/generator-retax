@@ -6,14 +6,15 @@ var helpers = require('yeoman-test');
 describe('generator-fullstack-react:reducer', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/reducer'))
-      .withOptions({someOption: true})
-      .withPrompts({someAnswer: true})
+      .withArguments(['errors'])
       .on('end', done);
   });
 
   it('creates files', function () {
     assert.file([
-      'dummyfile.txt'
+      'src/reducers/errors.js',
+      'src/reducers/__tests__/errors-test.js',
+      'src/reducers/reducers.js'
     ]);
   });
 });

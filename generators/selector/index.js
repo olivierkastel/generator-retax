@@ -1,13 +1,15 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
-var htmlWiring = require('html-wiring');
+var _ = require('lodash');
+var updateExport = require('../../helpers/updateIndex').updateExport;
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
     yeoman.Base.apply(this, arguments);
 
     this.argument('selectorName', {desc: 'The selector name (eg. errors)', type: String, required: true});
+    this.selectorName = _.camelCase(this.selectorName);
   },
 
   prompting: function () {
@@ -22,27 +24,24 @@ module.exports = yeoman.Base.extend({
         selectorName: this.selectorName
       }
     );
+    this.fs.copyTpl(
+      this.templatePath(`__tests__/selector-test.js`),
+      this.destinationPath(`src/selectors/__tests__/${this.selectorName}-test.js`),
+      {
+        selectorName: this.selectorName
+      }
+    );
   },
 
   _updateOrCopySelectorIndex() {
-    try {
-      var file = htmlWiring.readFileAsString('src/selectors/index.js');
-
-      if (!new RegExp(`export \\* from '\\.\\/${this.selectorName}';`, 'g').test(file)) {
-        file = file.replace(/^\s*\n/gm, '');
-        file = file.concat(`export * from './${this.selectorName}';`);
-      }
-
-      this.write('src/selectors/index.js', file);
-    } catch (e) {
-      this.fs.copyTpl(
-        this.templatePath('index.js'),
-        this.destinationPath('src/selectors/index.js'),
-        {
-          selectorName: this.selectorName
-        }
-      );
-    }
+    updateExport.bind(this)('src/selectors/index.js', {
+      templateFile: 'index.js',
+      templateOptions: {
+        selectorName: this.selectorName
+      },
+      exportRegex: new RegExp(`export \\* from '\\.\\/${this.selectorName}';`, 'g'),
+      exportString: `export * from './${this.selectorName}';`
+    });
   },
 
   writing: function () {

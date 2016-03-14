@@ -2,7 +2,7 @@
 var yeoman = require('yeoman-generator');
 var _ = require('lodash');
 var yosay = require('yosay');
-var htmlWiring = require('html-wiring');
+var updateExport = require('../../helpers/updateIndex').updateExport;
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -85,25 +85,15 @@ module.exports = yeoman.Base.extend({
   },
 
   _updateOrCopyRouteIndex() {
-    try {
-      var file = htmlWiring.readFileAsString('src/routes/routes.js');
-
-      if (!new RegExp(`export { default as gen${this.capitalizedRouteName}Route } from '\\.\\/${this.routeName}';`, 'g').test(file)) {
-        file = file.replace(/^\s*\n/gm, '');
-        file = file.concat(`export { default as gen${this.capitalizedRouteName}Route } from './${this.routeName}';`);
-      }
-
-      this.write('src/constants/routes/routes.js', file);
-    } catch (e) {
-      this.fs.copyTpl(
-        this.templatePath('routeIndex.js'),
-        this.destinationPath('src/routes/routes.js'),
-        {
-          routeName: this.routeName,
-          capitalizedRouteName: this.capitalizedRouteName
-        }
-      );
-    }
+    updateExport.bind(this)('src/routes/routes.js', {
+      templateFile: 'routeIndex.js',
+      templateOptions: {
+        routeName: this.routeName,
+        capitalizedRouteName: this.capitalizedRouteName
+      },
+      exportRegex: new RegExp(`export { default as gen${this.capitalizedRouteName}Route } from '\\.\\/${this.routeName}';`, 'g'),
+      exportString: `export { default as gen${this.capitalizedRouteName}Route } from './${this.routeName}';`
+    });
   },
 
   _copyRouteConstant() {
@@ -118,24 +108,14 @@ module.exports = yeoman.Base.extend({
   },
 
   _updateOrCopyRouteConstantIndex() {
-    try {
-      var file = htmlWiring.readFileAsString('src/constants/routes/index.js');
-
-      if (!new RegExp(`export \\* from '\\.\\/${this.routeName}';`, 'g').test(file)) {
-        file = file.replace(/^\s*\n/gm, '');
-        file = file.concat(`export * from './${this.routeName}';`);
-      }
-
-      this.write('src/constants/routes/index.js', file);
-    } catch (e) {
-      this.fs.copyTpl(
-        this.templatePath('indexRouteConstant.js'),
-        this.destinationPath('src/constants/routes/index.js'),
-        {
-          routeName: this.routeName
-        }
-      );
-    }
+    updateExport.bind(this)('src/constants/routes/index.js', {
+      templateFile: 'indexRouteConstant.js',
+      templateOptions: {
+        routeName: this.routeName
+      },
+      exportRegex: new RegExp(`export \\* from '\\.\\/${this.routeName}';`, 'g'),
+      exportString: `export * from './${this.routeName}';`
+    });
   },
 
   _copyRouteIndex() {

@@ -13,6 +13,7 @@ describe('generator-fullstack-react:selector', function () {
   it('creates files', function () {
     assert.file([
       'src/selectors/errors.js',
+      'src/selectors/__tests__/errors-test.js',
       'src/selectors/index.js'
     ]);
   });

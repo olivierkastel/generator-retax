@@ -1,40 +1,59 @@
 'use strict';
 var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
 var yosay = require('yosay');
+var _ = require('lodash');
+var updateExport = require('../../helpers/updateIndex').updateExport;
 
 module.exports = yeoman.Base.extend({
-  prompting: function () {
-    var done = this.async();
+  constructor: function () {
+    yeoman.Base.apply(this, arguments);
 
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the stellar ' + chalk.red('generator-fullstack-react') + ' generator!'
-    ));
+    this.argument('reducerName', {desc: 'The reducer name (eg. errors)', type: String, required: true});
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
-
-    this.prompt(prompts, function (props) {
-      this.props = props;
-      // To access props later use this.props.someOption;
-
-      done();
-    }.bind(this));
+    this.reducerName = _.camelCase(this.reducerName);
+    this.capitalizedReducerName = _.capitalize(this.reducerName);
   },
 
-  writing: function () {
-    this.fs.copy(
-      this.templatePath('dummyfile.txt'),
-      this.destinationPath('dummyfile.txt')
+  prompting: function () {
+    this.log(yosay('I will scaffold a reducer'));
+  },
+
+  _copyReducer() {
+    this.fs.copyTpl(
+      this.templatePath(`reducer.js`),
+      this.destinationPath(`src/reducers/${this.reducerName}.js`),
+      {
+        reducerName: this.reducerName
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath(`__tests__/reducer-test.js`),
+      this.destinationPath(`src/reducers/__tests__/${this.reducerName}-test.js`),
+      {
+        reducerName: this.reducerName,
+        capitalizedReducerName: this.capitalizedReducerName
+      }
     );
   },
 
-  install: function () {
-    this.installDependencies();
+  _updateOrCopyReducerIndex() {
+    updateExport.bind(this)('src/reducers/reducers.js', {
+      templateFile: 'index.js',
+      templateOptions: {
+        reducerName: this.reducerName
+      },
+      exportRegex: new RegExp(`export { default as ${this.reducerName} } from '\\.\\/${this.reducerName}';`, 'g'),
+      exportString: `export { default as ${this.reducerName} } from './${this.reducerName}';`
+    });
+  },
+
+  writing: function () {
+    this._copyReducer();
+    this._updateOrCopyReducerIndex();
+  },
+
+  end: function () {
+    this.log('The reducer has been initialized.');
   }
 });

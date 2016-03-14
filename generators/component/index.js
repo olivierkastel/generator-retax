@@ -1,7 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
-var htmlWiring = require('html-wiring');
+var updateExport = require('../../helpers/updateIndex').updateExport;
 
 module.exports = yeoman.Base.extend({
   constructor: function () {
@@ -57,24 +57,14 @@ module.exports = yeoman.Base.extend({
   },
 
   _updateOrCopyComponentIndex() {
-    try {
-      var file = htmlWiring.readFileAsString('src/components/index.js');
-
-      if (!new RegExp(`export { default as ${this.componentName} } from '\\.\\/${this.componentName}';`, 'g').test(file)) {
-        file = file.replace(/^\s*\n/gm, '');
-        file = file.concat(`export { default as ${this.componentName} } from './${this.componentName}';`);
-      }
-
-      this.write('src/components/index.js', file);
-    } catch (e) {
-      this.fs.copyTpl(
-        this.templatePath('componentIndex.js'),
-        this.destinationPath('src/components/index.js'),
-        {
-          componentName: this.componentName
-        }
-      );
-    }
+    updateExport.bind(this)('src/components/index.js', {
+      templateFile: 'componentIndex.js',
+      templateOptions: {
+        componentName: this.componentName
+      },
+      exportRegex: new RegExp(`export { default as ${this.componentName} } from '\\.\\/${this.componentName}';`, 'g'),
+      exportString: `export { default as ${this.componentName} } from './${this.componentName}';`
+    });
   },
 
   writing: function () {
