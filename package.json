@@ -1,12 +1,16 @@
 {
   "name": "generator-fullstack-react",
-  "version": "0.1.0",
+  "version": "0.6.0",
   "description": "Fullstack react boilerplate production ready.",
   "homepage": "https://github.com/hourliert/generator-fullstack-react",
   "author": {
     "name": "Thomas Hourlier",
     "email": "thomas.hourlier@cnode.fr",
     "url": "https://github.com/hourliert"
+  },
+  "engines": {
+    "node": ">=5",
+    "npm": ">=3.3 <4"
   },
   "files": [
     "generators"
