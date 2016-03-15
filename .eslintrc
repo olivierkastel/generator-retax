@@ -1,0 +1,10 @@
+{
+  "extends": "xo-space",
+  "globals": {
+    "describe": true,
+    "it": true,
+    "before": true,
+    "beforeEach": true,
+    "afterEach": true
+  }
+}
