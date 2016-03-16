@@ -1,4 +1,4 @@
-export { default as <%= containerName %> } from './<%= containerName %>';
+export { default as <%= containerName %> } from './page';
 <% if (scaffoldIndexRoute) { -%>
-export { default as <%= indexContainerName %> } from './<%= indexContainerName %>';
+export { default as <%= indexContainerName %> } from './indexRoute';
 <% } -%>

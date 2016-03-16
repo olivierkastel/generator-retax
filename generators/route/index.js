@@ -85,14 +85,19 @@ module.exports = yeoman.Base.extend({
   },
 
   _updateOrCopyRouteIndex() {
+    const exportObject = this.answers.asyncRoute ?
+      `gen${this.capitalizedRouteName}Route` :
+      `${this.routeName}Route`;
+
     updateExport.bind(this)('src/routes/routes.js', {
       templateFile: 'routeIndex.js',
       templateOptions: {
         routeName: this.routeName,
-        capitalizedRouteName: this.capitalizedRouteName
+        capitalizedRouteName: this.capitalizedRouteName,
+        asyncRoute: this.answers.asyncRoute
       },
-      exportRegex: new RegExp(`export { default as gen${this.capitalizedRouteName}Route } from '\\.\\/${this.routeName}';`, 'g'),
-      exportString: `export { default as gen${this.capitalizedRouteName}Route } from './${this.routeName}';`
+      exportRegex: new RegExp(`export { default as ${exportObject} } from '\\.\\/${this.routeName}';`, 'g'),
+      exportString: `export { default as ${exportObject} } from './${this.routeName}';\n`
     });
   },
 
@@ -104,7 +109,7 @@ module.exports = yeoman.Base.extend({
         routeValue: this.answers.routeValue
       },
       exportRegex: new RegExp(`export const ${this.routeNameConstant} = '${this.answers.routeValue}';`, 'g'),
-      exportString: `export const ${this.routeNameConstant} = '${this.answers.routeValue}';`
+      exportString: `export const ${this.routeNameConstant} = '${this.answers.routeValue}';\n`
     });
   },
 
@@ -129,9 +134,24 @@ module.exports = yeoman.Base.extend({
     );
   },
 
+  _copyIndexRouteIndex() {
+    this.fs.copyTpl(
+      this.templatePath('indexRoute.js'),
+      this.destinationPath(`src/routes/${this.routeName}/indexRoute.js`),
+      {
+        asyncRoute: this.answers.asyncRoute,
+        routeName: this.routeName
+      }
+    );
+  },
+
   _copyRoute() {
     this._updateOrCopyRouteConstantIndex();
     this._copyRouteIndex();
+
+    if (this.answers.scaffoldIndexRoute) {
+      this._copyIndexRouteIndex();
+    }
   },
 
   _copyContainerPage() {
@@ -172,8 +192,8 @@ module.exports = yeoman.Base.extend({
 
   _copyContainerIndexPage() {
     this.fs.copyTpl(
-      this.templatePath(`container/index/ContainerIndexPage.js`),
-      this.destinationPath(`src/routes/${this.routeName}/container/index/${this.indexContainerName}.js`),
+      this.templatePath(`container/indexRoute/ContainerIndexPage.js`),
+      this.destinationPath(`src/routes/${this.routeName}/container/indexRoute/${this.indexContainerName}.js`),
       {
         routeName: this.routeName,
 
@@ -187,8 +207,8 @@ module.exports = yeoman.Base.extend({
       }
     );
     this.fs.copyTpl(
-      this.templatePath(`container/index/__tests__/ContainerIndexPage-test.js`),
-      this.destinationPath(`src/routes/${this.routeName}/container/index/__tests__/${this.indexContainerName}-test.js`),
+      this.templatePath(`container/indexRoute/__tests__/ContainerIndexPage-test.js`),
+      this.destinationPath(`src/routes/${this.routeName}/container/indexRoute/__tests__/${this.indexContainerName}-test.js`),
       {
         redux: this.answers.redux,
         pureRender: this.answers.pureRender,
@@ -198,8 +218,8 @@ module.exports = yeoman.Base.extend({
       }
     );
     this.fs.copyTpl(
-      this.templatePath('container/index/index.js'),
-      this.destinationPath(`src/routes/${this.routeName}/container/index/index.js`),
+      this.templatePath('container/indexRoute/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/container/indexRoute/index.js`),
       {
         indexContainerName: this.indexContainerName
       }
@@ -259,8 +279,8 @@ module.exports = yeoman.Base.extend({
 
   _copyComponentIndexPage() {
     this.fs.copyTpl(
-      this.templatePath(`component/index/ComponentIndexPage.js`),
-      this.destinationPath(`src/routes/${this.routeName}/component/index/${this.indexComponentName}.js`),
+      this.templatePath(`component/indexRoute/ComponentIndexPage.js`),
+      this.destinationPath(`src/routes/${this.routeName}/component/indexRoute/${this.indexComponentName}.js`),
       {
         pureRender: this.answers.pureRender,
 
@@ -268,8 +288,8 @@ module.exports = yeoman.Base.extend({
       }
     );
     this.fs.copyTpl(
-      this.templatePath(`component/index/__tests__/ComponentIndexPage-test.js`),
-      this.destinationPath(`src/routes/${this.routeName}/component/index/__tests__/${this.indexComponentName}-test.js`),
+      this.templatePath(`component/indexRoute/__tests__/ComponentIndexPage-test.js`),
+      this.destinationPath(`src/routes/${this.routeName}/component/indexRoute/__tests__/${this.indexComponentName}-test.js`),
       {
         pureRender: this.answers.pureRender,
 
@@ -277,8 +297,8 @@ module.exports = yeoman.Base.extend({
       }
     );
     this.fs.copyTpl(
-      this.templatePath('component/index/index.js'),
-      this.destinationPath(`src/routes/${this.routeName}/component/index/index.js`),
+      this.templatePath('component/indexRoute/index.js'),
+      this.destinationPath(`src/routes/${this.routeName}/component/indexRoute/index.js`),
       {
         indexComponentName: this.indexComponentName
       }
@@ -325,14 +345,14 @@ module.exports = yeoman.Base.extend({
 
   _copyContainerIndexSelector() {
     this.fs.copyTpl(
-      this.templatePath(`selector/index/IndexPageSelector.js`),
-      this.destinationPath(`src/routes/${this.routeName}/selector/index/${this.indexSelectorName}.js`),
+      this.templatePath(`selector/indexRoute/IndexPageSelector.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/indexRoute/${this.indexSelectorName}.js`),
       {}
     );
 
     this.fs.copyTpl(
-      this.templatePath(`selector/index/index.js`),
-      this.destinationPath(`src/routes/${this.routeName}/selector/index/index.js`),
+      this.templatePath(`selector/indexRoute/index.js`),
+      this.destinationPath(`src/routes/${this.routeName}/selector/indexRoute/index.js`),
       {
         indexSelectorName: this.indexSelectorName
       }

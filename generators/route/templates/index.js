@@ -1,22 +1,38 @@
-<% if (scaffoldChildRoutes) { -%>
+<% if (scaffoldChildRoutes && asyncRoute) { -%>
 import warning from 'warning';
+
 <% } -%>
 import { <%= routeNameConstant %> } from 'constants/routes';
+<% if (!asyncRoute) { -%>
 import <%= containerName %> from 'routes/<%= routeName %>/container/page';
 <% if (scaffoldIndexRoute) { -%>
-import <%= indexContainerName %> from 'routes/<%= routeName %>/container/index';
+import getIndexRoute from 'routes/<%= routeName %>/indexRoute';
+<% } -%>
 <% } -%>
 
-<% if (asyncRoute) { -%>
 export default function getRoute(requireAuthFunctions) {
   return {
     path: <%= routeNameConstant %>,
     onEnter: requireAuthFunctions.<%= routeAccessLevel %>,
-    component: UserPage,
+<% if (asyncRoute) { -%>
+
+    getComponent(location, callback) {
+      require.ensure([], require => {
+        const container = require('routes/<%= routeName %>/container/page');
+        callback(null, container);
+      });
+    },
 <% if (scaffoldIndexRoute) { -%>
-    indexRoute: <%= indexContainerName %>,
+
+    getIndexRoute(location, callback) {
+      require.ensure([], require => {
+        const getIndexRoute = require('routes/<%= routeName %>/indexRoute');
+        callback(null, getIndexRoute());
+      });
+    },
 <% } -%>
 <% if (scaffoldChildRoutes) { -%>
+
     getChildRoutes(location, callback) {
       require.ensure([], require => {
         let routes = [];
@@ -30,28 +46,14 @@ export default function getRoute(requireAuthFunctions) {
       });
     },
 <% } -%>
-  };
-}
 <% } else { -%>
-export default {
-  path: <%= routeNameConstant %>,
-  component: UserPage,
+    component: <%= containerName %>,
 <% if (scaffoldIndexRoute) { -%>
-  indexRoute: <%= indexContainerName %>,
+    indexRoute: getIndexRoute(),
 <% } -%>
 <% if (scaffoldChildRoutes) { -%>
-  getChildRoutes(location, callback) {
-    require.ensure([], require => {
-      let routes = [];
-      try {
-        routes = [];
-      } catch (e) {
-        warning(false, e);
-      } finally {
-        callback(null, routes);
-      }
-    });
-  },
+    childRoutes: [],
 <% } -%>
-};
 <% } -%>
+  };
+}

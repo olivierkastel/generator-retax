@@ -3,8 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 <% } -%>
-
 <% if (pureRender) { -%>
+    
 import { pureRender } from 'decorators';
 <% } -%>
 import <%= componentName %> from 'routes/<%= routeName %>/component/page';
