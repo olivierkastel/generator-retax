@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 <% if (pureRender) { -%>
+    
 import { pureRender } from 'decorators';
 <% } -%>
 

@@ -3,13 +3,13 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 <% } -%>
-
 <% if (pureRender) { -%>
+
 import { pureRender } from 'decorators';
 <% } -%>
-import <%= indexComponentName %> from 'routes/<%= routeName %>/component/index';
+import <%= indexComponentName %> from 'routes/<%= routeName %>/component/indexRoute';
 <% if (redux && selector) { -%>
-import <%= indexSelectorName %> from 'routes/<%= routeName %>/selector/index';
+import <%= indexSelectorName %> from 'routes/<%= routeName %>/selector/indexRoute';
 <% } -%>
 
 <% if (redux && !selector) { -%>

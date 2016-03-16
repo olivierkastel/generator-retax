@@ -1,4 +1,4 @@
 export { default as <%= selectorName %> } from './page';
 <% if (scaffoldIndexRoute) { -%>
-export { default as <%= indexSelectorName %> } from './index';
+export { default as <%= indexSelectorName %> } from './indexRoute';
 <% } -%>
