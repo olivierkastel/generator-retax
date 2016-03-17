@@ -1,4 +1,2 @@
 node_modules
 coverage
-generators/app/templates/react-seed
-generators/seed-component/templates/seed-component
