@@ -20,7 +20,7 @@ module.exports = yeoman.Base.extend({
     this.componentName = `Wrapper${_.capitalize(this.routeName)}Page`;
     this.indexComponentName = `Wrapper${_.capitalize(this.routeName)}IndexPage`;
 
-    this.routeNameConstant = _.upperCase(this.routeName);
+    this.routeNameConstant = _.upperCase(_.snakeCase(this.routeName));
   },
 
   prompting: function () {
