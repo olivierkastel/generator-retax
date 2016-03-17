@@ -19,25 +19,25 @@ module.exports = yeoman.Base.extend({
       defaults: false
     });
 
-    this.argument('appName', {type: String, required: true});
-    this.kebabComponentName = _.kebabCase(this.appName);
-    this.appName = _.upperFirst(_.camelCase(this.appName));
+    this.argument('componentName', {type: String, required: true});
+    this.kebabComponentName = _.kebabCase(this.componentName);
+    this.componentName = _.upperFirst(_.camelCase(this.componentName));
 
-    this.sourceRoot(path.join(path.dirname(this.resolved), 'templates/react-seed'));
+    this.sourceRoot(path.join(path.dirname(this.resolved), 'templates/react-component-seed'));
   },
 
   prompting: function () {
     var done = this.async();
 
     // Have Yeoman greet the user.
-    this.log(yosay('Out of the box I include ' + chalk.red('React-seed')));
+    this.log(yosay('Out of the box I include ' + chalk.red('react-component-seed')));
 
     this.prompt([
       {
         type: 'input',
         name: 'repoUrl',
         message: 'Your Repo Url',
-        default: 'https://github.com/user/' + this.appName
+        default: 'https://github.com/user/' + this.componentName
       }, {
         type: 'input',
         name: 'author',
@@ -51,9 +51,9 @@ module.exports = yeoman.Base.extend({
   },
 
   writing: function () {
-    function renameSeed(file) {
+    function renameComponent(file) {
       file = file.toString();
-      return file.replace(/ReactSeed/g, this.appName);
+      return file.replace(/SeedComponent/g, this.componentName);
     }
 
     this.fs.copy(
@@ -63,13 +63,38 @@ module.exports = yeoman.Base.extend({
       ],
       this.destinationPath(),
       {
-        process: renameSeed.bind(this),
+        process: renameComponent.bind(this),
         globOptions: {
           ignore: [
             '**/package.json/**',
-            '**/.git/**'
+            '**/.git/**',
+            '**/SeedComponent*'
           ]
         }
+      }
+    );
+
+    this.fs.copy(
+      this.templatePath('src/SeedComponent.js'),
+      this.destinationPath(`src/${this.componentName}.js`),
+      {
+        process: renameComponent.bind(this)
+      }
+    );
+
+    this.fs.copy(
+      this.templatePath('src/SeedComponent.example'),
+      this.destinationPath(`src/${this.componentName}.example`),
+      {
+        process: renameComponent.bind(this)
+      }
+    );
+
+    this.fs.copy(
+      this.templatePath('src/__tests__/SeedComponent-test.js'),
+      this.destinationPath(`src/__tests__/${this.componentName}-test.js`),
+      {
+        process: renameComponent.bind(this)
       }
     );
 
@@ -77,7 +102,7 @@ module.exports = yeoman.Base.extend({
       this.templatePath('package.json'),
       this.destinationPath('package.json'),
       {
-        appName: this.appName,
+        componentName: this.componentName,
         repoUrl: this.answers.repoUrl,
         author: this.answers.author
       }
@@ -101,6 +126,6 @@ module.exports = yeoman.Base.extend({
   },
 
   end: function () {
-    this.log('React-seed has been installed.');
+    this.log('react-component-seed has been installed.');
   }
 });

@@ -2,3 +2,7 @@
 	path = generators/app/templates/react-seed
 	url = https://github.com/hourliert/react-seed.git
 	branch = master
+[submodule "generators/seed-component/templates/react-component-seed"]
+	path = generators/seed-component/templates/react-component-seed
+	url = https://github.com/hourliert/react-component-seed
+	branch = master
