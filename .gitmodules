@@ -4,5 +4,5 @@
 	branch = master
 [submodule "generators/seed-component/templates/react-component-seed"]
 	path = generators/seed-component/templates/react-component-seed
-	url = https://github.com/hourliert/react-component-seed
+	url = https://github.com/hourliert/react-component-seed.git
 	branch = master
