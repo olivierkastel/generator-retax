@@ -1,6 +1,6 @@
 {
   "name": "generator-fullstack-react",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Fullstack react boilerplate production ready.",
   "homepage": "https://github.com/hourliert/generator-fullstack-react",
   "author": {
@@ -21,10 +21,6 @@
     "redux",
     "immutable",
     "boilerplate"
-  ],
-  "files": [
-    "generators",
-    "helpers"
   ],
   "dependencies": {
     "chalk": "^1.0.0",
