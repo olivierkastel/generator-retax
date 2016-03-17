@@ -19,8 +19,9 @@ module.exports = yeoman.Base.extend({
       defaults: false
     });
 
-    this.argument('appname', {type: String, required: true});
-    this.appname = _.camelCase(this.appname);
+    this.argument('appName', {type: String, required: true});
+    this.kebabComponentName = _.kebabCase(this.appName);
+    this.appName = _.upperFirst(_.camelCase(this.appName));
 
     this.sourceRoot(path.join(path.dirname(this.resolved), 'templates/react-seed'));
   },
@@ -31,33 +32,61 @@ module.exports = yeoman.Base.extend({
     // Have Yeoman greet the user.
     this.log(yosay('Out of the box I include ' + chalk.red('React-seed')));
 
-    this.prompt({
-      type: 'input',
-      name: 'repourl',
-      message: 'Your Repo Url',
-      default: 'https://github.com/user/' + this.appname
-    }, function (answers) {
+    this.prompt([
+      {
+        type: 'input',
+        name: 'repoUrl',
+        message: 'Your Repo Url',
+        default: 'https://github.com/user/' + this.appName
+      }, {
+        type: 'input',
+        name: 'author',
+        message: 'Author',
+        default: 'User'
+      }
+    ], function (answers) {
       this.answers = answers;
       done();
     }.bind(this));
   },
 
   writing: function () {
-    this.fs.copyTpl(
+    function renameSeed(file) {
+      file = file.toString();
+      return file.replace(/ReactSeed/g, this.appName);
+    }
+
+    this.fs.copy(
       [
         this.templatePath('**/*'),
         this.templatePath('**/.*')
       ],
       this.destinationPath(),
       {
-        appname: this.appname,
-        repourl: this.answers.repourl
+        process: renameSeed.bind(this),
+        globOptions: {
+          ignore: [
+            '**/package.json/**',
+            '**/.git/**'
+          ]
+        }
+      }
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('package.json'),
+      this.destinationPath('package.json'),
+      {
+        appName: this.appName,
+        repoUrl: this.answers.repoUrl,
+        author: this.answers.author
       }
     );
 
     var packageJson = this.fs.read('package.json');
     var manifest = JSON.parse(packageJson.toString());
-    manifest.name = this.appname;
+    manifest.name = this.kebabComponentName;
+    manifest.version = '0.0.0';
 
     this.write('package.json', JSON.stringify(manifest, null, 2));
   },
