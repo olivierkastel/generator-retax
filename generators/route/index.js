@@ -9,7 +9,7 @@ module.exports = yeoman.Base.extend({
     yeoman.Base.apply(this, arguments);
 
     this.argument('routeName', {desc: 'The route name (eg. user)', type: String, required: true});
-    this.capitalizedRouteName = _.capitalize(this.routeName);
+    this.capitalizedRouteName = _.upperFirst(_.camelCase(this.routeName));
 
     this.containerName = `${_.capitalize(this.routeName)}Page`;
     this.indexContainerName = `${_.capitalize(this.routeName)}IndexPage`;
