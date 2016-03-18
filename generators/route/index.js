@@ -11,14 +11,14 @@ module.exports = yeoman.Base.extend({
     this.argument('routeName', {desc: 'The route name (eg. user)', type: String, required: true});
     this.capitalizedRouteName = _.upperFirst(_.camelCase(this.routeName));
 
-    this.containerName = `${_.capitalize(this.routeName)}Page`;
-    this.indexContainerName = `${_.capitalize(this.routeName)}IndexPage`;
+    this.containerName = `${this.capitalizedRouteName}Page`;
+    this.indexContainerName = `${this.capitalizedRouteName}IndexPage`;
 
-    this.selectorName = `${_.capitalize(this.routeName)}PageSelector`;
-    this.indexSelectorName = `${_.capitalize(this.routeName)}IndexPageSelector`;
+    this.selectorName = `${this.capitalizedRouteName}PageSelector`;
+    this.indexSelectorName = `${this.capitalizedRouteName}IndexPageSelector`;
 
-    this.componentName = `Wrapper${_.capitalize(this.routeName)}Page`;
-    this.indexComponentName = `Wrapper${_.capitalize(this.routeName)}IndexPage`;
+    this.componentName = `Wrapper${this.capitalizedRouteName}Page`;
+    this.indexComponentName = `Wrapper${this.capitalizedRouteName}IndexPage`;
 
     this.routeNameConstant = _.toUpper(_.snakeCase(this.routeName));
   },
