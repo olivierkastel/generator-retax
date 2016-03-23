@@ -75,8 +75,8 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
-      this.templatePath('src/SeedComponent.js'),
-      this.destinationPath(`src/${this.componentName}.js`),
+      this.templatePath('src/SeedComponent.tsx'),
+      this.destinationPath(`src/${this.componentName}.tsx`),
       {
         process: renameComponent.bind(this)
       }
@@ -91,8 +91,8 @@ module.exports = yeoman.Base.extend({
     );
 
     this.fs.copy(
-      this.templatePath('src/__tests__/SeedComponent-test.js'),
-      this.destinationPath(`src/__tests__/${this.componentName}-test.js`),
+      this.templatePath('src/__tests__/SeedComponent-test.tsx'),
+      this.destinationPath(`src/__tests__/${this.componentName}-test.tsx`),
       {
         process: renameComponent.bind(this)
       }
