@@ -17,23 +17,26 @@ describe('generator-fullstack-react:seed-component', function () {
       'package.json',
       'LICENSE',
       'npm-shrinkwrap.json',
-      'playground/clientEntry.js',
+      'playground/clientEntry.tsx',
       'playground/index.html',
       'README.md',
-      'src/index.js',
-      'src/styles.js',
+      'src/index.ts',
+      'src/styles.ts',
+      'tsconfig.json',
+      'tslint.json',
+      'types/playground.d.ts',
+      'typings.json',
       '.babelrc',
       '.builderrc',
       '.editorconfig',
-      '.eslintrc',
       '.gitignore',
       '.gitlab-ci.yml',
-      '.jscsrc',
+      '.npmignore',
       '.nvmrc',
       '.travis.yml',
-      'src/MyComp.js',
+      'src/MyComp.tsx',
       'src/MyComp.example',
-      'src/__tests__/MyComp-test.js'
+      'src/__tests__/MyComp-test.tsx'
     ]);
   });
 });
