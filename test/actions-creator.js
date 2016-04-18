@@ -3,9 +3,9 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-fullstack-react:action', function () {
+describe('generator-fullstack-react:actions-creator', function () {
   before(function (done) {
-    helpers.run(path.join(__dirname, '../generators/action-creator'))
+    helpers.run(path.join(__dirname, '../generators/actions-creator'))
       .withArguments(['errors'])
       .on('end', done);
   });

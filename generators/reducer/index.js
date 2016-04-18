@@ -54,7 +54,7 @@ module.exports = yeoman.Base.extend({
   },
 
   _updateOrCopyReducerIndex() {
-    updateExport.bind(this)('src/reducers/reducers.js', {
+    updateExport.bind(this)('src/reducers/index.js', {
       templateFile: 'index.js',
       templateOptions: {
         reducerName: this.reducerName
