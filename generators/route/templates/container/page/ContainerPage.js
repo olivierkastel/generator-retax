@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 <% } -%>
 <% if (pureRender) { -%>
-    
-import { pureRender } from 'decorators';
+
+import pureRender from 'pure-render-decorator';
 <% } -%>
 import <%= componentName %> from 'routes/<%= routeName %>/component/page';
 <% if (redux && selector) { -%>

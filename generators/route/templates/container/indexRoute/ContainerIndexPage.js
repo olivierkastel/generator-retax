@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 <% } -%>
 <% if (pureRender) { -%>
 
-import { pureRender } from 'decorators';
+import pureRender from 'pure-render-decorator';
 <% } -%>
 import <%= indexComponentName %> from 'routes/<%= routeName %>/component/indexRoute';
 <% if (redux && selector) { -%>
