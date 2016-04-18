@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 <% if (pureRender) { -%>
     
-import { pureRender } from 'decorators';
+import pureRender from 'pure-render-decorator';
 <% } -%>
 
 <% if (pureRender) { -%>
