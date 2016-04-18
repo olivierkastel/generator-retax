@@ -11,6 +11,7 @@ module.exports = yeoman.Base.extend({
     this.argument('actionCreatorName', {desc: 'The action creator name (eg. errors)', type: String, required: true});
 
     this.actionCreatorName = _.camelCase(this.actionCreatorName);
+    this.ActionCreatorName = `${_.upperFirst(_.camelCase(this.actionCreatorName))}ActionsCreator`;
   },
 
   prompting: function () {
@@ -59,6 +60,7 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(`src/actions/${this.actionCreatorName}.js`),
       {
         firstActionConstant: this.answers.firstActionConstant,
+        ActionCreatorName: this.ActionCreatorName,
         firstAction: this.answers.firstAction,
         actionCreatorName: this.actionCreatorName
       }
@@ -69,6 +71,7 @@ module.exports = yeoman.Base.extend({
       this.destinationPath(`src/actions/__tests__/${this.actionCreatorName}-test.js`),
       {
         actionCreatorName: this.actionCreatorName,
+        ActionCreatorName: this.ActionCreatorName,
 
         firstActionConstant: this.answers.firstActionConstant,
         firstAction: this.answers.firstAction
@@ -80,10 +83,11 @@ module.exports = yeoman.Base.extend({
     updateExport.bind(this)('src/actions/index.js', {
       templateFile: 'actionIndex.js',
       templateOptions: {
-        actionCreatorName: this.actionCreatorName
+        actionCreatorName: this.actionCreatorName,
+        ActionCreatorName: this.ActionCreatorName
       },
-      exportRegex: new RegExp(`export \\* from '\\.\\/${this.actionCreatorName}';`, 'g'),
-      exportString: `export * from './${this.actionCreatorName}';`
+      exportRegex: new RegExp(`export { default as ${this.ActionCreatorName} } from '\\.\\/${this.actionCreatorName}';`, 'g'),
+      exportString: `export { default as ${this.ActionCreatorName} } from './${this.actionCreatorName}';`
     });
   },
 

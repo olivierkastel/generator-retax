@@ -14,7 +14,7 @@ describe('generator-fullstack-react:reducer', function () {
     assert.file([
       'src/reducers/errors.js',
       'src/reducers/__tests__/errors-test.js',
-      'src/reducers/reducers.js'
+      'src/reducers/index.js'
     ]);
   });
 });

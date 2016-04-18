@@ -22,8 +22,8 @@ describe('<%= capitalizedReducerName %> Reducer', () => {
       payload: 1,
     };
 
-    expect(state.get('value').toJS()).to.equal(0);
+    expect(state.get('value')).to.equal(0);
     state = <%= reducerName %>(state, action);
-    expect(state.get('value').toJS()).to.equal(1);
+    expect(state.get('value')).to.equal(1);
   });
 });
