@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-fullstack-react:selector', function () {
+describe('generator-retax:selector', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/selector'))
       .withArguments(['errors'])

@@ -44,7 +44,7 @@ module.exports = yeoman.Base.extend({
         message: 'Author',
         default: 'User'
       }
-    ], function (answers) {
+    ]).then(function (answers) {
       this.answers = answers;
       done();
     }.bind(this));

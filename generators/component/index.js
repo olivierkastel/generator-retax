@@ -22,7 +22,7 @@ module.exports = yeoman.Base.extend({
         message: 'Should the components be pure?',
         default: true
       }
-    ], function (answers) {
+    ]).then(function (answers) {
       this.answers = answers;
       done();
     }.bind(this));

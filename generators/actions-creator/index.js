@@ -26,7 +26,7 @@ module.exports = yeoman.Base.extend({
         message: 'What is the name of the first action of this action creator?',
         default: 'DEFAULT_ACTION'
       }
-    ], function (answers) {
+    ]).then(function (answers) {
       this.answers = answers;
       this.answers.firstAction = _.camelCase(this.answers.firstActionConstant);
       done();

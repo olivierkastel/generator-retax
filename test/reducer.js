@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-fullstack-react:reducer', function () {
+describe('generator-retax:reducer', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/reducer'))
       .withArguments(['errors'])

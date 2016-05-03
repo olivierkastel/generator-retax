@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-fullstack-react:seed-component', function () {
+describe('generator-retax:seed-component', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/seed-component'))
       .withOptions({'skip-install': true, 'skip-install-message': true})

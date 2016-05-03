@@ -78,7 +78,7 @@ module.exports = yeoman.Base.extend({
         message: 'Should the component container include reselect?',
         default: true
       }
-    ], function (answers) {
+    ]).then(function (answers) {
       this.answers = answers;
       done();
     }.bind(this));

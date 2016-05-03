@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-fullstack-react:app', function () {
+describe('generator-retax:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({'skip-install': true, 'skip-install-message': true})

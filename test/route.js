@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-fullstack-react:route', function () {
+describe('generator-retax:route', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/route'))
       .withPrompts({scaffoldIndexRoute: true})
