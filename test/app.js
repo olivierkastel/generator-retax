@@ -19,7 +19,6 @@ describe('generator-fullstack-react:app', function () {
       'docker-compose.yml',
       'Dockerfile',
       'LICENSE',
-      'npm-shrinkwrap.json',
       'README.md',
       'src/actions/__tests__/app-test.js',
       'src/actions/__tests__/counter-test.js',
