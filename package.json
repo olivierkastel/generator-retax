@@ -1,12 +1,12 @@
 {
-  "name": "generator-fullstack-react",
+  "name": "generator-retax",
   "version": "2.1.0",
-  "description": "Fullstack react boilerplate production ready.",
-  "homepage": "https://github.com/hourliert/generator-fullstack-react",
+  "description": "retax seed production ready.",
+  "homepage": "https://github.com/retaxJS/generator-retax",
   "author": {
     "name": "Thomas Hourlier",
     "email": "thomas.hourlier@cnode.fr",
-    "url": "https://github.com/hourliert"
+    "url": "https://github.com/retaxJS"
   },
   "engines": {
     "node": ">=5",
@@ -49,7 +49,7 @@
       "mocha": true
     }
   },
-  "repository": "hourliert/generator-fullstack-react",
+  "repository": "retaxJS/generator-retax",
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"

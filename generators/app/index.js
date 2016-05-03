@@ -23,14 +23,14 @@ module.exports = yeoman.Base.extend({
     this.kebabComponentName = _.kebabCase(this.appName);
     this.appName = _.upperFirst(_.camelCase(this.appName));
 
-    this.sourceRoot(path.join(path.dirname(this.resolved), 'templates/react-seed'));
+    this.sourceRoot(path.join(path.dirname(this.resolved), 'templates/retax-seed'));
   },
 
   prompting: function () {
     var done = this.async();
 
     // Have Yeoman greet the user.
-    this.log(yosay('Out of the box I include ' + chalk.red('React-seed')));
+    this.log(yosay('Out of the box I include ' + chalk.red('retax-seed')));
 
     this.prompt([
       {
@@ -53,7 +53,7 @@ module.exports = yeoman.Base.extend({
   writing: function () {
     function renameSeed(file) {
       file = file.toString();
-      return file.replace(/ReactSeed/g, this.appName);
+      return file.replace(/RetaxSeed/g, this.appName);
     }
 
     this.fs.copy(
@@ -101,6 +101,6 @@ module.exports = yeoman.Base.extend({
   },
 
   end: function () {
-    this.log('React-seed has been installed.');
+    this.log('retax-seed has been installed.');
   }
 });
