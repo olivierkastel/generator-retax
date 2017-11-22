@@ -63,7 +63,7 @@ module.exports = yeoman.Base.extend({
         componentName: this.componentName
       },
       exportRegex: new RegExp(`export { default as ${this.componentName} } from '\\.\\/${this.componentName}';`, 'g'),
-      exportString: `export { default as ${this.componentName} } from './${this.componentName}';`
+      exportString: `export { default as ${this.componentName} } from './${this.componentName}';\n`
     });
   },
 
