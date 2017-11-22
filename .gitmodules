@@ -1,7 +1,7 @@
 [submodule "generators/seed-component/templates/react-component-seed"]
 	path = generators/seed-component/templates/react-component-seed
-	url = https://github.com/hourliert/react-component-seed.git
+	url = https://github.com/olivierkastel/react-seed-component.git
 	branch = master
 [submodule "generators/app/templates/target-seed"]
 	path = generators/app/templates/target-seed
-	url = https://github.com/targetJS/target-seed
+	url = https://github.com/olivierkastel/retax-seed.git
