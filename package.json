@@ -1,12 +1,12 @@
 {
-  "name": "generator-retax",
+  "name": "generator-target",
   "version": "2.2.1",
-  "description": "retax seed production ready.",
-  "homepage": "https://github.com/retaxJS/generator-retax",
+  "description": "target seed production ready.",
+  "homepage": "https://github.com/targetJS/generator-target",
   "author": {
     "name": "Thomas Hourlier",
     "email": "thomas.hourlier@cnode.fr",
-    "url": "https://github.com/retaxJS"
+    "url": "https://github.com/targetJS"
   },
   "engines": {
     "node": ">=5",
@@ -49,7 +49,7 @@
       "mocha": true
     }
   },
-  "repository": "retaxJS/generator-retax",
+  "repository": "targetJS/generator-target",
   "scripts": {
     "prepublish": "gulp prepublish",
     "test": "gulp"

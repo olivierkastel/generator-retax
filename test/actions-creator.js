@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-retax:actions-creator', function () {
+describe('generator-target:actions-creator', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/actions-creator'))
       .withArguments(['errors'])

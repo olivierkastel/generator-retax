@@ -1,5 +1,5 @@
-import { actionsCreatorFactory } from 'retax';
-import { annotator, AbstractActionsCreator } from 'retax-components';
+import { actionsCreatorFactory } from 'target';
+import { annotator, AbstractActionsCreator } from 'target-components';
 
 import {
   <%= firstActionConstant %>,

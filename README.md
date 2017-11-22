@@ -1,12 +1,12 @@
-# generator-retax [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][codecov-image]][codecov-url]
+# generator-target [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][codecov-image]][codecov-url]
 > Fullstack react boilerplate production ready.
 
-This is the official generator to scaffold a **retax** app.
+This is the official generator to scaffold a **target** app.
 
-* [generator-retax](#generator-retax)
+* [generator-target](#generator-target)
 * [Getting started](#getting-started)
 * [Generators](#generators)
-  - [retax-seed](#retax-seed)
+  - [target-seed](#target-seed)
   - [actions-creator](#actions-creator)
   - [reducer](#reducer)
   - [selector](#selector)
@@ -17,14 +17,14 @@ This is the official generator to scaffold a **retax** app.
 ## Getting started
 
 ```
-npm install -g yo generator-retax
+npm install -g yo generator-target
 ```
 
 ## Generators
-### retax-seed
-To generate a retax-seed based on [this](https://github.com/retaxJS/retax-seed) project run:
+### target-seed
+To generate a target-seed based on [this](https://github.com/targetJS/target-seed) project run:
 ```
-yo retax MyAppName
+yo target MyAppName
 ```
 
 The first argument of this generator is the project name (dash case). It is required.
@@ -35,7 +35,7 @@ The generator will prompt for:
 
 ### actions-creator
 ```
-yo retax:actions-creator blog
+yo target:actions-creator blog
 ```
 
 The first argument of this generator is the actions creator name (camel case). It is required.
@@ -43,14 +43,14 @@ The first argument of this generator is the actions creator name (camel case). I
 The generator will prompt for:
 * The first action name created by the generated actions creator. (default: `DEFAULT_ACTION`)
 
-This actions creator uses **retax-components** element.
+This actions creator uses **target-components** element.
 
 The previous command will generate:
 ```js
 // actions/blog.js
 
-import { actionsCreatorFactory } from 'retax';
-import { annotator, AbstractActionsCreator } from 'retax-components';
+import { actionsCreatorFactory } from 'target';
+import { annotator, AbstractActionsCreator } from 'target-components';
 
 import {
   DEFAULT_ACTION,
@@ -109,7 +109,7 @@ And update all folder `index.js` accordingly.
 
 ### reducer
 ```
-yo retax:reducer blog
+yo target:reducer blog
 ```
 
 The first argument of this generator is the reducer name (camel case). It is required.
@@ -122,7 +122,7 @@ The previous command will generate:
 ```js
 // reducers/blog.js
 
-import { reducerFactory } from 'retax';
+import { reducerFactory } from 'target';
 import { fromJS } from 'immutable';
 
 import {
@@ -184,7 +184,7 @@ And update all folder `index.js` accordingly.
 
 ### selector
 ```
-yo retax:selector blog
+yo target:selector blog
 ```
 
 The first argument of this generator is the selector name (camel case). It is required.
@@ -241,7 +241,7 @@ And update all folder `index.js` accordingly.
 
 ### component
 ```
-yo retax:component BlogPost
+yo target:component BlogPost
 ```
 
 The first argument of this generator is the component name (Upper camel case). It is required.
@@ -311,7 +311,7 @@ And update all folder `index.js` accordingly.
 
 ### route
 ```
-yo retax:route blog
+yo target:route blog
 ```
 
 The first argument of this generator is the route name (camel case). It is required.
@@ -319,7 +319,7 @@ The first argument of this generator is the route name (camel case). It is requi
 The generator will prompt for:
 * The url of the route (default `/lowercase(routeName)`)
 * Should this route be asynchronous [dynamic-routing](https://github.com/reactjs/react-router/blob/master/docs/guides/DynamicRouting.md)
-* The require access level to access this route (public, user, admin) (this is defined in [here](https://github.com/retaxJS/retax-seed/blob/master/src/config/access.js) in **retax-seed**)
+* The require access level to access this route (public, user, admin) (this is defined in [here](https://github.com/targetJS/target-seed/blob/master/src/config/access.js) in **target-seed**)
 * Should this route have child routes
 * Should this route have an index route
 * Should this route be pure (ie: use **pure-render-decorator**)
@@ -335,12 +335,12 @@ A route folder has the following structure:
 * `selector/{page,index}`: **reselect** selectors for the smart component.
 
 ### seed-component
-This generator should not be used in a **retax-seed** project. It should be called in am empty folder.
+This generator should not be used in a **target-seed** project. It should be called in am empty folder.
 
 It generates a standalone component that could be exported to github/npm. See [react-component-seed](https://github.com/hourliert/react-component-seed).
 
 ```
-yo retax:seed-component BlogPost
+yo target:seed-component BlogPost
 ```
 
 The first argument of this generator is the component name (Upper camel case). It is required.
@@ -351,14 +351,14 @@ The generator will prompt for:
 
 ## License
 
-MIT © [retaxJS](https://github.com/retaxJS)
+MIT © [targetJS](https://github.com/targetJS)
 
 
-[npm-image]: https://badge.fury.io/js/generator-retax.svg
-[npm-url]: https://npmjs.org/package/generator-retax
-[travis-image]: https://travis-ci.org/retaxJS/generator-retax.svg?branch=master
-[travis-url]: https://travis-ci.org/retaxJS/generator-retax
-[daviddm-image]: https://david-dm.org/retaxJS/generator-retax.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/retaxJS/generator-retax
-[codecov-image]: https://codecov.io/github/retaxJS/generator-retax/coverage.svg?branch=master
-[codecov-url]: https://codecov.io/github/retaxJS/generator-retax?branch=master
+[npm-image]: https://badge.fury.io/js/generator-target.svg
+[npm-url]: https://npmjs.org/package/generator-target
+[travis-image]: https://travis-ci.org/targetJS/generator-target.svg?branch=master
+[travis-url]: https://travis-ci.org/targetJS/generator-target
+[daviddm-image]: https://david-dm.org/targetJS/generator-target.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/targetJS/generator-target
+[codecov-image]: https://codecov.io/github/targetJS/generator-target/coverage.svg?branch=master
+[codecov-url]: https://codecov.io/github/targetJS/generator-target?branch=master

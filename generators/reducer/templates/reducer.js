@@ -1,4 +1,4 @@
-import { reducerFactory } from 'retax';
+import { reducerFactory } from 'target';
 import { fromJS } from 'immutable';
 
 import {

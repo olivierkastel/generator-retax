@@ -3,7 +3,7 @@ var path = require('path');
 var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
-describe('generator-retax:app', function () {
+describe('generator-target:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({'skip-install': true, 'skip-install-message': true})
@@ -138,7 +138,7 @@ describe('generator-retax:app', function () {
       'src/helpers/test/reactRouterMock.js',
       'src/helpers/test/reactRouterReduxMock.js',
       'src/helpers/test/reduxFormMock.js',
-      'src/helpers/test/retaxMock.js',
+      'src/helpers/test/targetMock.js',
       'src/helpers/test/storesStubs.js',
       'src/helpers/test/victoryMock.js',
       'src/images/favicon/favicon.ico',
@@ -157,7 +157,7 @@ describe('generator-retax:app', function () {
       'src/reducers/menus.js',
       'src/reducers/settings.js',
       'src/reducers/theme.js',
-      'src/retax.config.js',
+      'src/target.config.js',
       'src/routes/admin/component/index.js',
       'src/routes/admin/component/indexRoute/__tests__/WrapperAdminIndexPage-test.js',
       'src/routes/admin/component/indexRoute/index.js',
